@@ -12,10 +12,12 @@ namespace ImageUploadRetrieveDeleteProject.Controllers
     public class ImageController : Controller
     {
         private readonly ImageDBContext _context;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public ImageController(ImageDBContext context)
+        public ImageController(ImageDBContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostEnvironment = hostEnvironment;
         }
 
         // GET: Image
@@ -53,10 +55,25 @@ namespace ImageUploadRetrieveDeleteProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ImageId,ImageTitle,ImageName")] ImageModel imageModel)
+        public async Task<IActionResult> Create([Bind("ImageId,ImageTitle,ImageFile")] ImageModel imageModel)
         {
             if (ModelState.IsValid)
             {
+                //save image to wwwroot/image
+                string wwwRootPath = _hostEnvironment.WebRootPath;
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+                string fileName = Path.GetFileNameWithoutExtension(imageModel.ImageFile.FileName);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+                string fileExtension = Path.GetExtension(imageModel.ImageFile.FileName);
+                imageModel.ImageName= fileName = fileName + DateTime.Now.ToString("yymmssffff") + fileExtension;
+                string path = Path.Combine(wwwRootPath + "/Image/" + fileName);
+               
+                using (var fileStream=new FileStream(path, FileMode.Create))
+                {
+                    await imageModel.ImageFile.CopyToAsync(fileStream);
+                }
+
+                //insert record
                 _context.Add(imageModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -143,6 +160,7 @@ namespace ImageUploadRetrieveDeleteProject.Controllers
                 return Problem("Entity set 'ImageDBContext.Images'  is null.");
             }
             var imageModel = await _context.Images.FindAsync(id);
+
             if (imageModel != null)
             {
                 _context.Images.Remove(imageModel);

@@ -13,7 +13,9 @@ namespace ImageUploadRetrieveDeleteProject.Models
         public string? ImageTitle { get; set; }
 
         [Column(TypeName = "nvarchar(100)")]
-        //public string ImageName { get; set; }
+        [DisplayName("Upload Name")]
+        public string ImageName { get; set; }
+
         [NotMapped]
         [DisplayName("Upload File")]
         public IFormFile? ImageFile { get; set; }
