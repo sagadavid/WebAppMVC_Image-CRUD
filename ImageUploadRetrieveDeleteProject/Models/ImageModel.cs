@@ -14,7 +14,7 @@ namespace ImageUploadRetrieveDeleteProject.Models
 
         [Column(TypeName = "nvarchar(100)")]
         [DisplayName("Upload Name")]
-        public string ImageName { get; set; }
+        public string? ImageName { get; set; }
 
         [NotMapped]
         [DisplayName("Upload File")]

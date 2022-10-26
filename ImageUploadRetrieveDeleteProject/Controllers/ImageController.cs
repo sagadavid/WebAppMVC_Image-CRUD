@@ -53,6 +53,7 @@ namespace ImageUploadRetrieveDeleteProject.Controllers
         // POST: Image/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ImageId,ImageTitle,ImageFile")] ImageModel imageModel)
@@ -165,7 +166,12 @@ namespace ImageUploadRetrieveDeleteProject.Controllers
             {
                 _context.Images.Remove(imageModel);
             }
-            
+
+            //delete image from wwwroot/image folder
+            var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "image", imageModel.ImageName);
+            if (System.IO.File.Exists(imagePath))
+                System.IO.File.Delete(imagePath);
+            //delete the record
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
