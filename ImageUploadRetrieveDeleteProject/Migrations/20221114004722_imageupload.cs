@@ -4,7 +4,7 @@
 
 namespace ImageUploadRetrieveDeleteProject.Migrations
 {
-    public partial class ImageInitialCreate : Migration
+    public partial class imageupload : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,8 +14,8 @@ namespace ImageUploadRetrieveDeleteProject.Migrations
                 {
                     ImageId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ImageTitle = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    ImageName = table.Column<string>(type: "nvarchar(100)", nullable: false)
+                    ImageTitle = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    ImageName = table.Column<string>(type: "nvarchar(100)", nullable: true)
                 },
                 constraints: table =>
                 {

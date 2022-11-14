@@ -39,6 +39,29 @@ namespace ImageUploadRetrieveDeleteProject.Migrations
 
                     b.ToTable("Images");
                 });
+
+            modelBuilder.Entity("ImageUploadRetrieveDeleteProject.Models.Proposal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(180)
+                        .HasColumnType("nvarchar(180)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Proposals");
+                });
 #pragma warning restore 612, 618
         }
     }

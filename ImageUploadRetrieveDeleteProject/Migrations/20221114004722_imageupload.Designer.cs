@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ImageUploadRetrieveDeleteProject.Migrations
 {
     [DbContext(typeof(ImageDBContext))]
-    [Migration("20221026003634_second migration of images")]
-    partial class secondmigrationofimages
+    [Migration("20221114004722_imageupload")]
+    partial class imageupload
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

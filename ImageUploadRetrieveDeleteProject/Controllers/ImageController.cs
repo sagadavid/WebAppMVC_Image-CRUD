@@ -66,7 +66,7 @@ namespace ImageUploadRetrieveDeleteProject.Controllers
                 string fileName = Path.GetFileNameWithoutExtension(imageModel.ImageFile.FileName);
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
                 string fileExtension = Path.GetExtension(imageModel.ImageFile.FileName);
-                imageModel.ImageName= fileName = fileName + DateTime.Now.ToString("yymmssffff") + fileExtension;
+                imageModel.ImageName= fileName =  DateTime.Now.ToString("yyyyMddHHmmss") + fileName + fileExtension;
                 string path = Path.Combine(wwwRootPath + "/Image/" + fileName);
                
                 using (var fileStream=new FileStream(path, FileMode.Create))
